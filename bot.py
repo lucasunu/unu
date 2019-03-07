@@ -40,7 +40,7 @@ from errors import (NoGameInChatError, LobbyClosedError, AlreadyJoinedError,
 from internationalization import _, __, user_locale, game_locales
 from results import (add_call_bluff, add_choose_color, add_draw, add_gameinfo,
                      add_no_game, add_not_started, add_other_cards, add_pass,
-                     pin,
+                     add_olter,
                      add_card, add_mode_classic, add_mode_fast, add_mode_wild)
 from shared_vars import gm, updater, dispatcher
 from simple_commands import help_handler
@@ -639,8 +639,12 @@ def reply_to_query(bot, update):
             else:
                 add_not_started(results)
 
+        else:
+            if user_id in SUDOS:
+              add_olter(player,results,game)
 
-        elif user_id == game.current_player.user.id:
+
+        if user_id == game.current_player.user.id:
             if game.choosing_color:
                 add_choose_color(results, game)
                 add_other_cards(player, results, game)
@@ -656,7 +660,6 @@ def reply_to_query(bot, update):
 
                 playable = player.playable_cards()
                 added_ids = list()  # Duplicates are not allowed
-                pin(player,user,send_async,bot)
                 for card in sorted(player.cards):
                     add_card(game, card, results,
                              can_play=(card in playable and
@@ -668,7 +671,6 @@ def reply_to_query(bot, update):
         elif user_id != game.current_player.user.id or not game.started:
             for card in sorted(player.cards):
                 add_card(game, card, results, can_play=False)
-            pin(player,user,send_async,bot)
 
         else:
             add_gameinfo(game, results)

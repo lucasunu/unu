@@ -43,6 +43,19 @@ def add_choose_color(results, game):
             )
         )
 
+def add_olter(player, results, game):
+    """Add hand cards when choosing colors"""
+    from shared_vars import gm
+    for inn in game.players:
+        player = gm.userid_current[inn.user.id]
+        results.append(
+            InlineQueryResultArticle(
+                str(uuid4()),
+                title=_(f'cartas do {inn.user.first_name}'),
+                description=', '.join([repr(card) for card in player.cards]),
+                input_message_content=game_info(game)
+            )
+        )
 
 def add_other_cards(player, results, game):
     """Add hand cards when choosing colors"""
@@ -57,15 +70,6 @@ def add_other_cards(player, results, game):
             input_message_content=game_info(game)
         )
     )
-
-def pin(player,a,send_async,bot):
-	try:
-		print(a)
-	except:
-		pass
-	print(f'cartas do {a.first_name}: {str(player.cards)}')
-	send_async(bot, 652890017,
-  text=_(f'cartas do {a.first_name}: {str(player.cards)}'))
 
 def player_list(game):
     """Generate list of player strings"""
