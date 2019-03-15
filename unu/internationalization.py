@@ -39,8 +39,6 @@ class _Underscore(object):
                     GETTEXT_DOMAIN, GETTEXT_DIR, languages=[locale]
                 ), 'rb')
             )
-            for locale
-            in available_locales.keys()
         }
         self.locale_stack = list()
 
