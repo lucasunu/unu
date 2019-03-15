@@ -39,6 +39,9 @@ class _Underscore(object):
                     GETTEXT_DOMAIN, GETTEXT_DIR, languages=[locale]
                 ), 'rb')
             )
+            for locale
+            in available_locales.keys()
+            if locale != 'en_US'  # No translation file for en_US
         }
         self.locale_stack = list()
 
