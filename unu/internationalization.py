@@ -41,7 +41,6 @@ class _Underscore(object):
             )
             for locale
             in available_locales.keys()
-            if str(locale) != str('en_US')  # No translation file for en_US
         }
         self.locale_stack = list()
 
